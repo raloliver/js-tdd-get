@@ -47,8 +47,19 @@ describe('API Wrapper', () => {
     it('should call fetch function', () => {
       const fetchStub = sinon.stub(global, 'fetch');
       const items = search();
-
+      //call is not maked, just verify method with stub
       expect(fetchStub).to.have.been.calledOnce;
+
+      //restore to make a test again
+      fetchStub.restore();
+    });
+
+    //check endpoint
+    it('should receive correct endpoint to fetch', () => {
+      const fetchStub = sinon.stub(global, 'fetch');
+      const items = search('Michael Jackson', 'artist');
+
+      expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael%20Jackson&type=artist');
     });
   });
 });

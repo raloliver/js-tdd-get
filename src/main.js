@@ -1,5 +1,5 @@
 export const search = () => {
-  fetch('https://spotify.com');
+  fetch('https://api.spotify.com/v1/search?q=Michael%20Jackson&type=artist');
 };
 export const searchAlbums = () => { };
 export const searchArtists = () => { };
