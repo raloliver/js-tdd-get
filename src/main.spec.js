@@ -56,13 +56,25 @@ describe('API Wrapper', () => {
 
     //check endpoint
     it('should receive correct endpoint to fetch', () => {
-      const fetchStub = sinon.stub(global, 'fetch');
 
-      const artist = search('Michael Jackson', 'artist');
-      expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael Jackson&type=artist');
+      context('one type', () => {
+        const fetchStub = sinon.stub(global, 'fetch');
 
-      const albums = search('Bad', 'album');      
-      expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Bad&type=album');
+        const artist = search('Michael Jackson', 'artist');
+        expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael Jackson&type=artist');
+
+        const albums = search('Bad', 'album');
+        expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Bad&type=album');
+
+        fetchStub.restore();
+      });
+
+      context('one more type', () => {
+        const fetchStub = sinon.stub(global, 'fetch');
+
+        const artistsAndAlbums = search('Michael Jackson', ['artist', 'album']);
+        expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael Jackson&type=artist,album');
+      });
     });
   });
 });
