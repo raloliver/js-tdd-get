@@ -44,34 +44,36 @@ describe('API Wrapper', () => {
   });
 
   describe('generic search', () => {
+    let fetchStub;
+
+    beforeEach(() => {
+      fetchStub = sinon.stub(global, 'fetch');
+    });
+
+    afterEach(() => {
+      //restore to make a test again
+      fetchStub.restore();
+    });
+
+
     it('should call fetch function', () => {
-      const fetchStub = sinon.stub(global, 'fetch');
       const items = search();
       //call is not maked, just verify method with stub
       expect(fetchStub).to.have.been.calledOnce;
-
-      //restore to make a test again
-      fetchStub.restore();
     });
 
     //check endpoint
     it('should receive correct endpoint to fetch', () => {
 
       context('one type', () => {
-        const fetchStub = sinon.stub(global, 'fetch');
-
         const artist = search('Michael Jackson', 'artist');
         expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael Jackson&type=artist');
 
         const albums = search('Bad', 'album');
         expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Bad&type=album');
-
-        fetchStub.restore();
       });
 
       context('one more type', () => {
-        const fetchStub = sinon.stub(global, 'fetch');
-
         const artistsAndAlbums = search('Michael Jackson', ['artist', 'album']);
         expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael Jackson&type=artist,album');
       });
