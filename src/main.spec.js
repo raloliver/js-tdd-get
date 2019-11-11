@@ -1,4 +1,14 @@
-import { expect } from 'chai';
+import chai, { expect } from 'chai';
+
+import sinon from 'sinon'; //work with promises
+import sinonChai from 'sinon-chai'; //integrate sinon with chai 
+import sinonStubPromise from 'sinon-stub-promise'; //work with promise
+
+chai.use(sinonChai); //use sinon chai interface
+sinonStubPromise(sinon); //test indeed 
+
+global.fetch = require('node-fetch'); //init global fetch (from browser)
+
 import { search, searchAlbums, searchArtists, searchTracks, searchPlaylists } from './main';
 
 describe('API Wrapper', () => {
@@ -34,8 +44,11 @@ describe('API Wrapper', () => {
   });
 
   describe('generic search', () => {
-    it('should call fetch function', () =>{
+    it('should call fetch function', () => {
+      const fetchStub = sinon.stub(global, 'fetch');
       const items = search();
+
+      expect(fetchStub).to.have.been.calledOnce;
     });
   });
 });
