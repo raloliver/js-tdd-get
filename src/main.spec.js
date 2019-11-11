@@ -59,10 +59,10 @@ describe('API Wrapper', () => {
       const fetchStub = sinon.stub(global, 'fetch');
 
       const artist = search('Michael Jackson', 'artist');
-      expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael%20Jackson&type=artist');
+      expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael Jackson&type=artist');
 
       const albums = search('Bad', 'album');      
-      expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael%20Jackson&type=album');
+      expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Bad&type=album');
     });
   });
 });
