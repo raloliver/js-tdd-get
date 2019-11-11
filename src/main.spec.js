@@ -2,10 +2,8 @@ import chai, { expect } from 'chai';
 
 import sinon from 'sinon'; //work with promises
 import sinonChai from 'sinon-chai'; //integrate sinon with chai 
-import sinonStubPromise from 'sinon-stub-promise'; //work with promise
 
 chai.use(sinonChai); //use sinon chai interface
-sinonStubPromise(sinon); //test indeed 
 
 global.fetch = require('node-fetch'); //init global fetch (from browser)
 
@@ -48,6 +46,7 @@ describe('API Wrapper', () => {
 
     beforeEach(() => {
       fetchStub = sinon.stub(global, 'fetch');
+      fetchStub.resolves({ json: () => { } });
     });
 
     afterEach(() => {
