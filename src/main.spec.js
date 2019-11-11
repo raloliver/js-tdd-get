@@ -32,4 +32,10 @@ describe('API Wrapper', () => {
     });
 
   });
+
+  describe('generic search', () => {
+    it('should call fetch function', () =>{
+      const items = search();
+    });
+  });
 });
