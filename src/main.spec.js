@@ -43,10 +43,11 @@ describe('API Wrapper', () => {
 
   describe('generic search', () => {
     let fetchStub;
+    let promise;
 
     beforeEach(() => {
       fetchStub = sinon.stub(global, 'fetch');
-      fetchStub.resolves({ json: () => { } });
+      promise = fetchStub.resolves({ json: () => { artist: 'Michael Jackson' } }); //check received data
     });
 
     afterEach(() => {
@@ -65,7 +66,7 @@ describe('API Wrapper', () => {
     it('should receive correct endpoint to fetch', () => {
 
       context('one type', () => {
-        const artist = search('Michael Jackson', 'artist');
+        const artists = search('Michael Jackson', 'artist');
         expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael Jackson&type=artist');
 
         const albums = search('Bad', 'album');
@@ -76,6 +77,14 @@ describe('API Wrapper', () => {
         const artistsAndAlbums = search('Michael Jackson', ['artist', 'album']);
         expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael Jackson&type=artist,album');
       });
+    });
+
+    //check data values
+    it('should return data from promise', () => {
+      const artists = search('Michael Jackson', 'artist');
+
+      //to deeply equal (eql())
+      expect(artists.resolveValue).to.be.eql({ json: 'Michael Jackson' });
     });
   });
 });
