@@ -57,9 +57,12 @@ describe('API Wrapper', () => {
     //check endpoint
     it('should receive correct endpoint to fetch', () => {
       const fetchStub = sinon.stub(global, 'fetch');
-      const items = search('Michael Jackson', 'artist');
 
+      const artist = search('Michael Jackson', 'artist');
       expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael%20Jackson&type=artist');
+
+      const albums = search('Bad', 'album');      
+      expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael%20Jackson&type=album');
     });
   });
 });
