@@ -10,7 +10,18 @@ global.fetch = require('node-fetch'); //init global fetch (from browser)
 import { search, searchAlbums, searchArtists, searchTracks, searchPlaylists } from './main';
 
 describe('API Wrapper', () => {
+  let fetchStub;
+  let promise;
 
+  beforeEach(() => {
+    fetchStub = sinon.stub(global, 'fetch');
+    promise = fetchStub.resolves({ json: () => { artist: 'Michael Jackson' } }); //check received data
+  });
+
+  afterEach(() => {
+    //restore to make a test again
+    fetchStub.restore();
+  });
   describe('smoke tests', () => {
 
     //search: get generics and more than one type
@@ -41,20 +52,8 @@ describe('API Wrapper', () => {
 
   });
 
+  //#TODO: resolveValue fixed
   describe('generic search', () => {
-    let fetchStub;
-    let promise;
-
-    beforeEach(() => {
-      fetchStub = sinon.stub(global, 'fetch');
-      promise = fetchStub.resolves({ json: () => { artist: 'Michael Jackson' } }); //check received data
-    });
-
-    afterEach(() => {
-      //restore to make a test again
-      fetchStub.restore();
-    });
-
 
     it('should call fetch function', () => {
       const items = search();
@@ -85,6 +84,50 @@ describe('API Wrapper', () => {
 
       //to deeply equal (eql())
       expect(artists.resolveValue).to.be.eql({ json: 'Michael Jackson' });
+    });
+  });
+
+  describe('searchArtists', () => {
+    it('should call fetch method', () => {
+      const artists = searchArtists('Michael Jackson');
+      expect(fetchStub).to.have.been.calledOnce;
+    });
+    it('should receive correct endpoint to fetch', () => {
+      const artists = searchArtists('Michael Jackson');
+      expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael Jackson&type=artist');
+    });
+  });
+
+  describe('searchAlbums', () => {
+    it('should call fetch method', () => {
+      const albums = searchAlbums('Michael Jackson');
+      expect(fetchStub).to.have.been.calledOnce;
+    });
+    it('should receive correct endpoint to fetch', () => {
+      const albums = searchAlbums('Michael Jackson');
+      expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael Jackson&type=album');
+    });
+  });
+
+  describe('searchTracks', () => {
+    it('should call fetch method', () => {
+      const tracks = searchTracks('Michael Jackson');
+      expect(fetchStub).to.have.been.calledOnce;
+    });
+    it('should receive correct endpoint to fetch', () => {
+      const tracks = searchTracks('Michael Jackson');
+      expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael Jackson&type=tracks');
+    });
+  });
+
+  describe('searchPlaylists', () => {
+    it('should call fetch method', () => {
+      const playlists = searchPlaylists('Michael Jackson');
+      expect(fetchStub).to.have.been.calledOnce;
+    });
+    it('should receive correct endpoint to fetch', () => {
+      const playlists = searchPlaylists('Michael Jackson');
+      expect(fetchStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Michael Jackson&type=playlists');
     });
   });
 });
