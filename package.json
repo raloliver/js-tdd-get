@@ -9,7 +9,7 @@
     "build:out": "./node_modules/.bin/babel --out-dir package src",
     "build:watch": "npm run build -- --watch",
     "build:umd": "./node_modules/.bin/webpack --output-filename get-wrapper.umd.js",
-    "build:umd:min": "./node_modules/.bin/webpack --output-filename get-wrapper.umd.js",
+    "build:umd:min": "./node_modules/.bin/webpack --output-filename get-wrapper.umd.min.js -p",
     "lint": "./node_modules/.bin/eslint src/*.js",
     "test": "./node_modules/.bin/mocha src/**/*.spec.js --require babel-register",
     "test:watch": "./node_modules/.bin/mocha src/**/*.spec.js --require babel-register --watch",
