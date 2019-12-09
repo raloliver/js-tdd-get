@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": "./node_modules/.bin/babel --out-dir dist src",
+    "build:watch": "npm run build --watch",
     "lint": "./node_modules/.bin/eslint src/*.js",
     "test": "./node_modules/.bin/mocha src/**/*.spec.js --require babel-register",
     "test:watch": "./node_modules/.bin/mocha src/**/*.spec.js --require babel-register --watch",
