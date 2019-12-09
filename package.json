@@ -8,6 +8,8 @@
     "build": "npm run clear && npm run build:out",
     "build:out": "./node_modules/.bin/babel --out-dir package src",
     "build:watch": "npm run build -- --watch",
+    "build:umd": "./node_modules/.bin/webpack --output-filename get-wrapper.umd.js",
+    "build:umd:min": "./node_modules/.bin/webpack --output-filename get-wrapper.umd.js",
     "lint": "./node_modules/.bin/eslint src/*.js",
     "test": "./node_modules/.bin/mocha src/**/*.spec.js --require babel-register",
     "test:watch": "./node_modules/.bin/mocha src/**/*.spec.js --require babel-register --watch",
@@ -34,9 +36,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
+    "@babel/core": "^7.7.5",
+    "@babel/cli": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/register": "^7.0.0",
+    "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
@@ -47,7 +51,9 @@
     "nyc": "^14.1.1",
     "rimraf": "^3.0.0",
     "sinon": "^7.5.0",
-    "sinon-chai": "^3.3.0"
+    "sinon-chai": "^3.3.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   },
   "dependencies": {}
 }
