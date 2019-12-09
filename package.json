@@ -4,8 +4,10 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "build": "./node_modules/.bin/babel --out-dir dist src",
-    "build:watch": "npm run build --watch",
+    "clear": "rimraf dist",
+    "build": "npm run clear && npm run build:out",
+    "build:out": "./node_modules/.bin/babel --out-dir dist src",
+    "build:watch": "npm run build -- --watch",
     "lint": "./node_modules/.bin/eslint src/*.js",
     "test": "./node_modules/.bin/mocha src/**/*.spec.js --require babel-register",
     "test:watch": "./node_modules/.bin/mocha src/**/*.spec.js --require babel-register --watch",
@@ -43,6 +45,7 @@
     "mocha": "^6.2.1",
     "node-fetch": "^2.6.0",
     "nyc": "^14.1.1",
+    "rimraf": "^3.0.0",
     "sinon": "^7.5.0",
     "sinon-chai": "^3.3.0"
   },
